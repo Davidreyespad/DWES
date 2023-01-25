@@ -11,20 +11,17 @@ class CestaCompra {
     protected $unidades;
 
     public function carga_articulo($codigo, $unidades) {
-
-        if (array_key_exists($codigo, $this->productos)) {
-            $numero_unidades = $this->unidades[$codigo];
-            $numero_unidades += $unidades;
-            $this->unidades[$codigo] = $numero_unidades;
+        if (array_key_exists($codigo, $this->carrito)) {
+            $this->carrito[$codigo]['unidades'] += $unidades;
         } else {
             try {
-                $producto = DB::obtieneProducto($codigo);
-                $this->productos[$codigo] = $producto;
-                $this->unidades[$codigo] = $unidades;
+                $this->carrito[$codigo]['producto'] = DB::obtieneProducto($cod_prod);
+                $this->carrito[$codigo]['unidades'] = $unidades;
             } catch (Exception $ex) {
                 throw $ex;
             }
         }
+        return $this->carrito;
     }
 
     public function get_productos() {
@@ -38,17 +35,21 @@ class CestaCompra {
     public function get_coste() {
         $coste = 0;
         foreach ($this->carrito as $producto) {
-            $coste += $producto->getPVP();
+            $coste += $producto['unidades']*$producto['producto']->getPvp();
         }
         return $coste;
     }
 
-    public static function get_familia($cod_prod) {
-        
+    public static function get_familia($codigo) {
+        return $this->carrito[$codigo]["producto"]->getFamilia();
     }
 
     public function guardar_cesta() {
-        $_SESSION['cesta'] = $this;
+        $_SESSION["cesta"] = $this;
+    }
+    
+    public function carro() {
+        return $this->carrito;
     }
 
     public function is_vacia() {
@@ -70,7 +71,8 @@ class CestaCompra {
     }
 
     public static function vaciar_cesta() {
-        
+        $_SESSION["cesta"]= new CestaCompra();
+        return $_SESSION["cesta"];
     }
 
 }

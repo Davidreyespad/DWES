@@ -8,9 +8,18 @@ class DB {
 
     public static function obtieneFamilias() {
 
-        $sql = 'SELECT * FROM familia';
+        $array_familia = [];
+        try {
+            $consulta_familias = self::ejecuta_consulta('SELECT * FROM familia');
 
-        $filas = self::ejecutaConsultas($sql, $parametros);
+            foreach ($consulta_familias as $familia) {
+                $array_familia[] = new Familia($familia);
+            }
+
+            return $array_familia;
+        } catch (Exception $ex) {
+            throw $ex;
+        }
     }
 
     public static function obtieneProductos($cod_familia) {
@@ -47,7 +56,7 @@ class DB {
         $cadena_conexion = 'mysql:dbname=dwes2;host=127.0.0.1';
         $usuario = 'david';
         $clave = 'usuario';
-        
+
         $bd = new PDO($cadena_conexion, $usuario, $clave);
 
         $sql = 'SELECT usuario, password FROM usuarios WHERE usuario=:nombre and password=:contra';
@@ -69,25 +78,43 @@ class DB {
         }
     }
 
-    private static function ejecutaConsultas($sql, $parametros) {
-
+    private static function ejecuta_consulta() {
         $cadena_conexion = 'mysql:dbname=dwes2;host=127.0.0.1';
         $usuario = 'david';
         $clave = 'usuario';
 
-        $resultado = null;
+        $array_fun = func_get_args();
+       
+        if (func_num_args() == 1) {
+            try {
 
-        try {
+                $bd = new PDO($cadena_conexion, $usuario, $clave);
+                $query = $array_fun[0];
+                $resultado_familia = $bd->query($query);
 
-            $bd = new PDO($cadena_conexion, $usuario, $clave);
+                return $resultado_familia;
+            } catch (Exception $ex) {
+                throw $ex;
+            }
+            //Esta función, con dos parametros, ejecuta la consulta parametrizada
+        } elseif (func_num_args() == 2) {
+            try {
 
-            $preparar_consulta = $bd->prepare($sql);
+                $bd = new PDO(CADENA_CONEXION, USUARIO, CONTRA);
+                //El primer parametro que le pasamos es la consulta
+                $query = $array_fun[0];
+                $preparar = $bd->prepare($query);
+                //El segundo parametro que le pasamos es un array para la consulta preparada
+                $parametros = $array_fun[1];
+                $preparar->execute($parametros);
 
-            $preparar_consulta->execute($parametros);
-
-            return $preparar_consulta;
-        } catch (PDOException $ex) {
-            echo $ex->getMessage();
+                return $preparar;
+            } catch (Exception $ex) {
+                throw $ex;
+            }
+        } else {
+            //En caso de que tenga 0 o más de 2 parámetros:
+            return null;
         }
     }
 

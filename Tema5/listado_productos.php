@@ -7,27 +7,25 @@ require_once './Producto.php';
 
 comprobar_sesion();
 
-$cesta_compra = CestaCompra::carga_cesta();
-$cesta_compra = new CestaCompra();
+$cesta = CestaCompra::carga_cesta();
+$cesta = new CestaCompra();
 
 if (isset($_POST['vaciar'])) {
-    $cesta_compra->vaciar_cesta();
-    $cesta_compra->guardar_cesta();
+    $cesta->vaciar_cesta();
+    $cesta->guardar_cesta();
 }
 
-$cesta_vacia = $cesta_compra->is_vacia();
-$prod_cesta = $cesta_compra->get_productos();
+$cesta_vacia = $cesta->is_vacia();
+$prod_cesta = $cesta->get_productos();
 
 $mensaje_excepcion = "";
 $cod_familia = "";
 
 if (isset($_REQUEST['familia'])) {
     $cod_familia = htmlspecialchars($_REQUEST['familia']);
-    try {
-        $productos = DB::obtieneProducto($codigo);
-    } catch (Exception $ex) {
-        $mensaje_excepcion = $ex->getMessage();
-    }
+    $_SESSION['familia'] = $cod_familia;
+} else if (isset($_SESSION['familia'])) {
+    $cod_familia = $_SESSION['familia'];
 }
 ?>
 <html>
@@ -54,17 +52,14 @@ if (isset($_REQUEST['familia'])) {
                     <table>
                         <tr>
                             <th>Nombre</th>
-                            <th>Código</th>
+                            <th></th>
                             <th>Unidades</th>
-                            <th>Precio</th>
                         </tr>
-
-                        <?php foreach ($prod_cesta as $value): ?>
+                        <?php foreach ($cesta as $prod): ?>
                             <tr>
-                                <td><?= $value['producto']->getnombre(); ?></td>
-                                <td><?= $value['producto']->getcodigo(); ?></td>
-                                <td><?= $value['unidades'] ?></td>
-                                <td><?= $value['producto']->getPVP() ?></td>
+                                <td><?= $prod["producto"]->getnombre ?></td>
+                                <td>x</td>
+                                <td><?= $prod["unidades"] ?></td>
                             </tr>
                         <?php endforeach; ?>
 
@@ -91,7 +86,7 @@ if (isset($_REQUEST['familia'])) {
                         <th>Descripción</th>
                         <th>PVP</th>
                     </tr>  
-                    <?php if (isset ($productos) && count ($productos) > 0): ?>
+                    <?php if (isset($productos) && count($productos) > 0): ?>
                         <tr>
                             <td>
                                 <form id='anadir' action='listado_productos.php?familia=<?= $familia ?>' method='post'>
