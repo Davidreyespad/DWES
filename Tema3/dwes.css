@@ -1,0 +1,48 @@
+h1 {
+    margin-bottom: 0px;
+}
+.titulo {
+    align-items: center;
+    text-align: center;
+    width: 100%;
+}
+
+.productos{
+    align-items: center;
+    text-align: center;
+    margin-left: 15px;
+}
+
+table{
+    border-collapse: collapse;
+    margin: 15px auto;
+    width: 250px;
+    height: 10px;
+}
+
+th{
+    border: 1px solid black;
+}
+
+td{
+    border: 1px solid black;
+
+}
+
+#encabezado {
+    background-color: #FFBB33;
+    width: 130%;
+}
+#contenido {
+    background-color:#EEEEEE;
+    height: 300px;
+    width: 130%;
+    align-items: center;
+}
+
+#pie {
+    background-color:#FFBB33;
+    color:#ff0000;
+    height:30px;
+    width: 130%;
+} 

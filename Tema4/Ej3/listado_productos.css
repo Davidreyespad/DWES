@@ -1,0 +1,29 @@
+table{
+    border-collapse: collapse;
+    margin: 15px auto;
+    border: 1px solid black;
+}
+
+th{
+    margin: 1px;
+    border: 1px solid black;
+    background-color: skyblue;
+    font-size: 40px;
+}
+
+#segundo{
+    width: 210px;
+    margin-left: 20px;
+}
+
+.error {
+    font-family: Verdana, Arial, sans-serif;
+    font-size: 0.7em;
+    color: #900;
+    background-color : #ffff00;
+}
+
+
+
+
+
