@@ -1,16 +1,11 @@
 <?php
+require_once './CestaCompra.php';
+require_once './funciones.php';
+comprobar_sesion();
 
+$cesta = CestaCompra::carga_cesta();
+$cesta->get_carrito();
+
+echo json_encode($cesta);
 
 ?>
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title></title>
-    </head>
-    <body>
-        <?php
-        // put your code here
-        ?>
-    </body>
-</html>

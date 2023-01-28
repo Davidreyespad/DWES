@@ -1,63 +1,31 @@
 <?php
-//Compruebo si vengo de cerrar Sesión
-if (isset($_REQUEST['logout'])) {
-    $mensaje_logout = 'Sesión cerrada correctamente';
-}
+require_once './DB.php';
 
-//Variables para la conexión a la bd
 $cadena_conexion = 'mysql:dbname=dwes2;host=127.0.0.1';
 $usuario = 'david';
 $clave = 'usuario';
 
 try {
 
+    $bd = new PDO($cadena_conexion, $usuario, $clave);
 
-    if (isset($_POST["enviar"])) {
+    if (isset($_POST['Enviar'])) {
 
-        //RECOGIDA DE DATOS DEL FORMULARIO LOGIN:
-        //Recojo el usuario
-        $user = $_POST["usuario"];
-        //La contraseña la encriptamos en md5 (Para ello, la contraseña en la base de datos
-        //tiene que estar también encriptada)
-        $pass = md5($_POST["password"]);
+        $nombre = $_POST["usuario"];
+        $contrasena = md5($_POST["password"]);
 
-        //Hago la conexión a la bd
-        $bd = new PDO($cadena_conexion, $usuario, $clave);
+        $ejecutar = new DB();
 
-        $query = "SELECT * FROM usuarios WHERE usuario= :nombre AND password= :clave";
-        $preparar_login = $bd->prepare($query);
-        $parametros = [":nombre" => $user, ":clave" => $pass];
-        $preparar_login->execute($parametros);
-        $num_fila = $preparar_login->rowCount();
-
-        //Si me devuelve 0, es que no ha encontrado coincidencias
-        if ($num_fila > 0) {
-            //En caso de que se haya loggeado correctamente
-            session_start();
-            //Guardo el nombre del usuario en la session[FLAG]
-            $_SESSION['usuario'] = $user;
-
-            //MEJORA PARA CUANDO VA AL LOGIN CON UNA SESIÓN ABIERTA:
-            //if(isset($_SESSION['usuario'])){
-            //    header('Location:continuar_cerrar_sesion.php?redireccionado=true');
-            //}else{
-            //    $_SESSION['usuario'] = $user;
-            //    header('Location: sesiones.php');
-            //}
-            
-            //Redirecciono a la página de familias_productos
-            header('Location: listado_familias.php');
-        } else {
-            //Si el rowCount es cero, muestra el mensaje de error
-            $mensaje_login_fallido = "Usuario y/o contraseña no válido";
+        $ejecucion = $ejecutar->verificaCliente($nombre, $contrasena);
+        if($ejecucion==false){
+            $mensaje_excepcion = "Fallo en la contraseña o en el usuario";
         }
     }
-} catch (Exception $ex) {
-    $mensaje_catch = "Ha ocurrido un error: " . $ex->getMessage();
+} catch (PDOException $ex) {
+    $mensaje_excepcion = "Algo no ha salido bien:" . $ex->getMessage();
 }
-
-// <div><span class='error'><?= $mensaje (interrogación)></span>
 ?>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -89,7 +57,7 @@ try {
                     </div>
 
                     <div class='campo'>
-                        <input type='submit' name='enviar' value='Enviar' />
+                        <input type='submit' name='Enviar' value='Enviar' />
                     </div>
                 </fieldset>
             </form>
