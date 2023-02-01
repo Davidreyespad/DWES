@@ -96,15 +96,14 @@ class DB {
             } catch (Exception $ex) {
                 throw $ex;
             }
-            //Esta función, con dos parametros, ejecuta la consulta parametrizada
         } elseif (func_num_args() == 2) {
             try {
 
-                $bd = new PDO(CADENA_CONEXION, USUARIO, CONTRA);
-                //El primer parametro que le pasamos es la consulta
+                $bd = new PDO($cadena_conexion, $usuario, $clave);
+                
                 $query = $array_fun[0];
                 $preparar = $bd->prepare($query);
-                //El segundo parametro que le pasamos es un array para la consulta preparada
+                
                 $parametros = $array_fun[1];
                 $preparar->execute($parametros);
 
@@ -113,7 +112,6 @@ class DB {
                 throw $ex;
             }
         } else {
-            //En caso de que tenga 0 o más de 2 parámetros:
             return null;
         }
     }

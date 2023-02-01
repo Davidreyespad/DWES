@@ -13,6 +13,10 @@ try {
 
         $nombre = $_POST["usuario"];
         $contrasena = md5($_POST["password"]);
+        
+        if(DB::verificaCliente($nombre, $contrasena)){
+            
+        }
 
         $ejecutar = new DB();
 

@@ -9,6 +9,7 @@ comprobarSesion();
 //Comprobamos si hay cesta creada, sino la creamos
 $cesta = CestaCompra::carga_cesta();
 
+
 //Si hemos llegado hasta aquí con la cesta vacía, nos redirige a listado_familias_vista.php
 if ($cesta->is_vacia()) {
     header('Location: ../Vista/listado_familias_vista.php?cesta_vacia=true');

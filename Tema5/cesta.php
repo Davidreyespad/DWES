@@ -1,14 +1,13 @@
+<?php
+require_once './CestaCompra.php';
+require_once './DB.php';
+require_once './funciones.php';
 
 
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title></title>
-    </head>
-    <body>
-        <?php
-        // put your code here
-        ?>
-    </body>
-</html>
+
+$cesta = CestaCompra::carga_cesta();
+
+print_r($cesta);
+
+?>
+

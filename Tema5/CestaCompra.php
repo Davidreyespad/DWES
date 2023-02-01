@@ -7,8 +7,6 @@ require_once ('./familia.php');
 class CestaCompra {
 
     protected $carrito = [];
-    protected $productos;
-    protected $unidades;
 
     public function carga_articulo($codigo, $unidades) {
         if (array_key_exists($codigo, $this->carrito)) {

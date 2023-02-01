@@ -12,6 +12,7 @@ require_once '../Servicio/CestaCompra.php';
     </head>
 
     <body class="pagcesta">
+       
 
         <div id="contenedor">
             <div id="encabezado">
