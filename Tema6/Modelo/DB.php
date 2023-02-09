@@ -1,9 +1,8 @@
 <?php
 
-include_once '../Modelo/constantes.php';
-include_once '../Modelo/Familia.php';
-include_once '../Modelo/Producto.php';
-include_once '../../Hash/crear_contra_hash.php';
+require_once '/home/dreypad/NetBeansProjects/DWES/Tema6/Modelo/constantes.php';
+require_once '/home/dreypad/NetBeansProjects/DWES/Tema6/Modelo/Familia.php';
+require_once '/home/dreypad/NetBeansProjects/DWES/Tema6/Modelo/Producto.php';
 
 class DB {
 

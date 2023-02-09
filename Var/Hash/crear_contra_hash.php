@@ -8,7 +8,7 @@ try{
     
     $bd = new PDO($cadena_conexion, $usuario_conexion, $clave_usuario);
     
-    $usuario= 'pedro';
+    $usuario= 'david';
     $clave = password_hash('usuario', PASSWORD_DEFAULT);
     
     $consulta = "INSERT INTO usuarios (usuario, password) VALUES('$usuario', '$clave')";

@@ -1,8 +1,8 @@
 <?php
-require_once './CestaCompra.php';
+require_once './Servicio/CestaCompra.php';
+require_once './Servicio/funciones.php';
 
-require_once './funciones.php';
-comprobar_sesion();
+comprobarSesion();
 
 $cesta = CestaCompra::carga_cesta();
 
@@ -16,6 +16,9 @@ if(isset($_POST['enviar'])){
     
     //Guardo en la cesta
     $cesta->guardar_cesta();
+    
+    console.log("hola");
+    print_r("holita");
     
 }
 

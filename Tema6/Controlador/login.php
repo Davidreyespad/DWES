@@ -1,5 +1,5 @@
 <?php
-require_once '/home/dreypad/NetBeansProjects/DWES/Tema6/Modelo/DB.php';
+require_once '../Modelo/DB.php';
 if (isset($_REQUEST['logout'])) {
     $mensaje_logout = 'Sesión cerrada correctamente';
 }
