@@ -1,6 +1,6 @@
 <?php
-require_once '/home/dreypad/NetBeansProjects/DWES/Tema6/Servicio/CestaCompra.php';
-require_once '/home/dreypad/NetBeansProjects/DWES/Tema6/Servicio/funciones.php';
+require_once 'CestaCompra.php';
+require_once 'funciones.php';
 
 comprobarSesion();
 

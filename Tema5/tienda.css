@@ -193,3 +193,19 @@
 } 
 
 
+.cantidad{
+    width: 45px;
+}
+
+.eliminar{
+    background-color: red;
+    color: black;
+    border-radius: 50%;
+}
+
+.desconectar{
+    background-color: #f11010;
+    color: white;
+    height: 40px;
+    font-size: 20px;
+}

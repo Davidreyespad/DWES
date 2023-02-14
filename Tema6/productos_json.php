@@ -1,13 +1,18 @@
+<?php
 
+require_once './CestaCompra.php';
+require_once './DB.php';
+require_once './funciones.php';
 
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title></title>
-    </head>
-    <body>
-        <?php
-        // put your code here
-        ?>
-    </body>
-</html>
+comprobarSesion();
+
+if(isset($_REQUEST['familia'])){
+    $cod_familia = $_REQUEST['familia'];
+}
+
+$array_productos = DB::obtieneProductos($cod_familia);
+
+$json = json_encode($array_productos, true);
+echo $json;
+
+?>

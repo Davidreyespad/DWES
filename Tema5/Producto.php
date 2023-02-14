@@ -1,50 +1,46 @@
 <?php
-require_once './CestaCompra.php';
-require_once './DB.php';
-require_once './familia.php';
 
-class Producto {
-
-    protected $codigo;
-    protected $nombre;
-    protected $nombre_corto;
-    protected $PVP;
-
-    public function getcodigo() {
-        return $this->codigo;
+class Producto{
+    
+    private $cod;
+    private $nombre;
+    private $nombre_corto;
+    private $pvp;
+    private $familia;
+    private $descripcion;
+    
+    function __construct($fila) {
+        $this->cod = $fila['cod'];
+        $this->nombre = $fila['nombre'];
+        $this->nombre_corto = $fila['nombre_corto'];
+        $this->pvp = $fila['PVP'];
+        $this->familia = $fila['familia'];
+        $this->descripcion = $fila['descripcion'];        
     }
-
-    public function getnombre() {
+    
+    public function getCod(){
+        return $this->cod;
+    }
+    
+    public function getNombre(){
         return $this->nombre;
     }
-
-    public function getnombrecorto() {
+    
+    public function getNombre_corto(){
         return $this->nombre_corto;
     }
-
-    public function getPVP() {
-        return $this->PVP;
+    
+    public function getPvp(){
+        return $this->pvp;
     }
-
-    public function muestra() {
-        print "<p>" . $this->codigo . "</p>";
+    
+    public function getFamilia(){
+        return $this->familia;
     }
-
-    public function __construct($row) {
-
-        $this->codigo = $row['cod'];
-        $this->nombre = $row['nombre'];
-        $this->nombre_corto = $row['nombre_corto'];
-        $this->PVP = $row['PVP'];
+    
+    public function getDescripcion(){
+        return $this->descripcion;
     }
-
+    
 }
-?>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title></title>
-    </head>
-    <body>
-    </body>
-</html>
+

@@ -39,7 +39,7 @@ $coste_total = $cesta->get_coste();
         <div id="contenedor">
             <div id="encabezado">
                 
-                <h1><img src='../icono/cesta.png' alt='Cesta' width='40' height='40'> Cesta de la compra <?php if (isset($_SESSION['usuario'])): ?>
+                <h1><img src='cesta.png' alt='Cesta' width='40' height='40'> Cesta de la compra <?php if (isset($_SESSION['usuario'])): ?>
                         de <?= ucfirst($_SESSION['usuario']) ?>
                     <?php endif ?></h3></h1>
             </div>

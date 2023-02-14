@@ -13,7 +13,11 @@ comprobarSesion();
 $cesta = CestaCompra::carga_cesta();
 
 if (isset($_POST['vaciar'])) {
-    $cesta = $cesta->vacia_cesta();
+    unset($_SESSION['cesta']);
+    //Inicializamos la cesta
+    $cesta = new CestaCompra();
+    
+                //$cesta = $cesta->vacia_cesta();
 }
 
 if (isset($_REQUEST['familia'])) {
@@ -47,6 +51,10 @@ if(isset($_POST['anadir'])){
 }
 
 $cesta_vacia = $cesta->is_vacia();
+
+$usuario = $_SESSION['usuario'];
+
+$productos = DB::obtieneProductos($cod_familia);
 
 ?>
 
@@ -109,23 +117,23 @@ $cesta_vacia = $cesta->is_vacia();
                     <?php if (isset($array_productos)): ?>
                         <table>
                             <tr>
-                                <th>Añadir</th>
-                                <th>Nombre</th>
+                                <th>Código</th>
                                 <th>Descripción</th>
                                 <th>PVP</th>
+                                <th>Añadir</th>
                             </tr> 
         <?php foreach ($array_productos as $producto): ?>
                                 <tr>
+                                    <td><?= $producto->getCod() ?></td>
+                                    <td><?= $producto->getDescripcion() ?></td>
+                                    <td><?= $producto->getPvp() ?>€</td>
                                     <td>
-                                        <form id='anadir' action='listado_productos.php?familia=<?= $cod_familia ?>' method='post'>
+                                        <form id='anadir' onsubmit="anadirProductos(this); return false" action='listado_productos.php?familia=<?= $cod_familia ?>' method='post'>
                                             <input type="number" name='unidades' value='1' class="cantidad">
                                             <input type='submit' name='anadir' value='Añadir'/>
                                             <input type='hidden' name='cod' value='<?= $producto->getCod() ?>'/>
                                         </form>
                                     </td>
-                                    <td><?= $producto->getNombre_corto() ?></td>
-                                    <td><?= $producto->getDescripcion() ?></td>
-                                    <td><?= $producto->getPvp() ?>€</td>
                                 </tr>
         <?php endforeach; ?>
 
@@ -152,5 +160,6 @@ $cesta_vacia = $cesta->is_vacia();
                 <p class="error"><?= $mensaje_catch ?></p>
             </div>
 <?php endif ?>
+        <script src="cargarDatos.js"></script>
     </body>
 </html>

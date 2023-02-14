@@ -1,43 +1,42 @@
 <?php
 require_once './DB.php';
 
-$cadena_conexion = 'mysql:dbname=dwes2;host=127.0.0.1';
-$usuario = 'david';
-$clave = 'usuario';
 
-try {
-
-    $bd = new PDO($cadena_conexion, $usuario, $clave);
-
-    if (isset($_POST['Enviar'])) {
-
-        $nombre = $_POST["usuario"];
-        $contrasena = md5($_POST["password"]);
-        
-        if(DB::verificaCliente($nombre, $contrasena)){
-            
-        }
-
-        $ejecutar = new DB();
-
-        $ejecucion = $ejecutar->verificaCliente($nombre, $contrasena);
-        if($ejecucion==false){
-            $mensaje_excepcion = "Fallo en la contraseña o en el usuario";
-        }
-    }
-} catch (PDOException $ex) {
-    $mensaje_excepcion = "Algo no ha salido bien:" . $ex->getMessage();
+if(isset($_REQUEST['logout'])){
+    $mensaje_logout = 'Sesion cerrada';
 }
-?>
 
+if(isset($_REQUEST['redirigido'])){
+    $mensaje_sin_sesion = 'Tiene que iniciar sesion antes';
+}
+
+if(isset($_POST['enviar'])){
+    $nombre = htmlspecialchars($_POST['usuario']);
+    $contra = md5($_POST['password']);
+    
+    if(DB::verificaCliente($nombre, $contra)){
+        
+        session_start();
+        
+        $_SESSION['usuario'] = $nombre;
+        
+        header('Location: listado_familia.php');
+        
+    }else{
+        $mensaje_login_fallido = "usuario y/o contraseña no valido";
+    }
+    
+}
+
+
+?>
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-        <title>Login Tienda</title>
+        <meta charset="UTF-8">
+        <title>Login_Vista</title>
         <link href="tienda.css" rel="stylesheet" type="text/css">
     </head>
-
     <body>
         <div id='login'>
 
@@ -51,6 +50,9 @@ try {
                     <?php if (isset($mensaje_logout)): ?>
                         <p class="correcto"><?= $mensaje_logout ?></p>
                     <?php endif ?>
+                        <?php if (isset($mensaje_sin_sesion)): ?>
+                        <p class="error"><?= $mensaje_sin_sesion ?></p>
+                    <?php endif ?>
                     <div class='campo'>
                         <label for='usuario'>Usuario:</label><br/>
                         <input type='text' name='usuario' id='usuario' maxlength="50" /><br/>
@@ -61,7 +63,7 @@ try {
                     </div>
 
                     <div class='campo'>
-                        <input type='submit' name='Enviar' value='Enviar' />
+                        <input type='submit' name='enviar' value='Enviar' />
                     </div>
                 </fieldset>
             </form>

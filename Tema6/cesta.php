@@ -1,6 +1,28 @@
-<?php 
-require_once '../Controlador/cesta.php';
-require_once '../Servicio/CestaCompra.php';
+<?php
+
+require_once './CestaCompra.php';
+require_once './DB.php';
+require_once './funciones.php';
+
+comprobarSesion();
+
+$cesta = CestaCompra::carga_cesta();
+
+
+if($cesta->is_vacia()){
+    header('Location: listado_familia?cesta_vacia=true');
+}
+
+if(isset($_POST['pagar'])){
+    $cesta->vacia_cesta();
+    header ('Location: pagado.php?pagado=true');
+}
+
+if (isset($_POST['desconectar'])){
+    desconectarme();
+}
+
+$coste_total = $cesta->get_coste();
 ?>
 
 <!DOCTYPE html>
@@ -8,7 +30,7 @@ require_once '../Servicio/CestaCompra.php';
    <head>
         <meta http-equiv="content-type" content="text/html; charset=UTF-8">
         <title>Cesta de la Compra</title>
-        <link href="../estilos/tienda.css" rel="stylesheet" type="text/css">
+        <link href="tienda.css" rel="stylesheet" type="text/css">
     </head>
 
     <body class="pagcesta">
@@ -17,7 +39,7 @@ require_once '../Servicio/CestaCompra.php';
         <div id="contenedor">
             <div id="encabezado">
                 
-                <h1><img src='../icono/cesta.png' alt='Cesta' width='40' height='40'> Cesta de la compra <?php if (isset($_SESSION['usuario'])): ?>
+                <h1><img src='cesta.png' alt='Cesta' width='40' height='40'> Cesta de la compra <?php if (isset($_SESSION['usuario'])): ?>
                         de <?= ucfirst($_SESSION['usuario']) ?>
                     <?php endif ?></h3></h1>
             </div>
@@ -37,7 +59,7 @@ require_once '../Servicio/CestaCompra.php';
                             <td><?= $producto['producto']->getPvp() ?></td>
                             <td><?= $producto['unidades']?></td>
                             <td>
-                                <form id='modificar' action='../Controlador/eliminar.php' method='post'>
+                                <form id='modificar' action='eliminar.php' method='post'>
                                     <input type="number" name='unidades_modif' value="0" class="cantidad"></input>
                                     <input type='submit' name='eliminar_unidades' class='eliminar' value='X'/>
                                     <input type='hidden' name='cod_modif' value='<?= $producto['producto']->getCod()?>'/>
@@ -65,9 +87,9 @@ require_once '../Servicio/CestaCompra.php';
                 </form>        
             </div>
              <div id="pie">
-                <a href="listado_familias_vista.php">Ir a Listado Familias</a>
+                <a href="listado_familias.php">Ir a Listado Familias</a>
                 <br>
-                <a href="listado_productos_vista.php">Ir a Listado Productos</a>
+                <a href="listado_productos.php">Ir a Listado Productos</a>
             </div>
         </div>
     </body>
