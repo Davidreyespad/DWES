@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Pedido {% endblock %}
+
+{% block contenido %}
+
+    {% if error==false %}
+
+        <table>
+            {% for producto in carro %}
+                <tr>
+                    <td>{{ producto.producto.getCod() }}</td>
+                    <td>{{ producto.producto.getNombre() }}</td>
+                    <td>{{ producto.producto.getPrecio() }} euros</td>
+                    <td>{{ producto.unidades }} unidades</td>
+                </tr>
+            {%  endfor %}     
+        </table>
+
+        <p>Precio Total: {{ precio }} €</p>
+
+    {%  else %}   
+        <p>{{ error }}</p>
+    {%  endif %}
+
+{% endblock %}

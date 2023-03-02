@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %} 
+
+{% block title %}Todos mis pedidos{% endblock %} 
+
+{% block contenido %} 
+
+
+    {% for pedido in pedidos %}
+
+        <p>
+            Número de Pedido: {{ pedido.getId() }} <br>
+            Fecha del pedido: {{ pedido.getFecha() | date("Y-m-d") }}
+        </p>
+        <table>
+
+            <tr>
+                <th>Nombre del producto</th>
+                <th>Nº de Unidades</th>
+            </tr>
+
+            {% for productos in pedido.pedidosProductos %}
+
+                <tr>
+                    <td>{{ productos.producto.getNombre() }}</td>
+                    <td>{{ productos.unidades }}</td>
+                </tr>
+
+            {%  endfor %} 
+            
+            </table>           
+            <b><p>Precio Total del Pedido Nº{{ pedido.getId() }}: {{ pedido.getCoste() }} €</p></b>
+            <hr>
+        {%  endfor %}     
+   
+
+{% endblock %}
