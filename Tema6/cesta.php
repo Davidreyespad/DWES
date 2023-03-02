@@ -59,7 +59,7 @@ $coste_total = $cesta->get_coste();
                             <td><?= $producto['producto']->getPvp() ?></td>
                             <td><?= $producto['unidades']?></td>
                             <td>
-                                <form id='modificar' action='eliminar.php' method='post'>
+                                <form id='modificar' onsubmit='eliminarProductos(this); return false;' method='post'>
                                     <input type="number" name='unidades_modif' value="0" class="cantidad"></input>
                                     <input type='submit' name='eliminar_unidades' class='eliminar' value='X'/>
                                     <input type='hidden' name='cod_modif' value='<?= $producto['producto']->getCod()?>'/>
@@ -92,5 +92,6 @@ $coste_total = $cesta->get_coste();
                 <a href="listado_productos.php">Ir a Listado Productos</a>
             </div>
         </div>
+        <<script src="cargaDatos.js"></script>
     </body>
 </html>

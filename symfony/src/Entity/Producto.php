@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ProductoRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -32,6 +34,16 @@ class Producto
      * @ORM\JoinColumn(nullable=false)
      */
     private $familia;
+
+    /**
+     * @ORM\OneToMany(targetEntity=PedidosProductos::class, mappedBy="producto", orphanRemoval=true)
+     */
+    private $pedidosProductos;
+
+    public function __construct()
+    {
+        $this->pedidosProductos = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -70,6 +82,36 @@ class Producto
     public function setFamilia(?Familia $familia): self
     {
         $this->familia = $familia;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PedidosProductos>
+     */
+    public function getPedidosProductos(): Collection
+    {
+        return $this->pedidosProductos;
+    }
+
+    public function addPedidosProducto(PedidosProductos $pedidosProducto): self
+    {
+        if (!$this->pedidosProductos->contains($pedidosProducto)) {
+            $this->pedidosProductos[] = $pedidosProducto;
+            $pedidosProducto->setProducto($this);
+        }
+
+        return $this;
+    }
+
+    public function removePedidosProducto(PedidosProductos $pedidosProducto): self
+    {
+        if ($this->pedidosProductos->removeElement($pedidosProducto)) {
+            // set the owning side to null (unless already changed)
+            if ($pedidosProducto->getProducto() === $this) {
+                $pedidosProducto->setProducto(null);
+            }
+        }
 
         return $this;
     }

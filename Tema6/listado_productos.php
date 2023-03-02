@@ -128,7 +128,7 @@ $productos = DB::obtieneProductos($cod_familia);
                                     <td><?= $producto->getDescripcion() ?></td>
                                     <td><?= $producto->getPvp() ?>€</td>
                                     <td>
-                                        <form id='anadir' onsubmit="anadirProductos(this); return false" action='listado_productos.php?familia=<?= $cod_familia ?>' method='post'>
+                                        <form id='anadir' onsubmit='eliminarProductos(this); return false;' method='post'>
                                             <input type="number" name='unidades' value='1' class="cantidad">
                                             <input type='submit' name='anadir' value='Añadir'/>
                                             <input type='hidden' name='cod' value='<?= $producto->getCod() ?>'/>
@@ -160,6 +160,6 @@ $productos = DB::obtieneProductos($cod_familia);
                 <p class="error"><?= $mensaje_catch ?></p>
             </div>
 <?php endif ?>
-        <script src="cargarDatos.js"></script>
+        
     </body>
 </html>

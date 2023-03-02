@@ -1,0 +1,9 @@
+{% block header %}
+    <h3>Bienvenid@ {{ app.user.username }}</h3>
+    <ul>
+        <li><a href="{{ path('familia') }}">Listado de familias</a> </li>
+        <li><a href="{{ path('cesta') }}">Listado de productos</a> </li>
+        <li><a href="{{ path('cesta') }}">Cesta</a> </li>
+        <li><a href="{{ path('familia') }}">Logout</a> </li>
+    </ul>
+{% endblock %}

@@ -29,8 +29,7 @@ if (isset($_POST['modificar'])) {
     $consultaPreparada = $conexion->stmt_init();
     
     // SIN ETIQUETAS
-    $query = "UPDATE stock SET unidades = ? WHERE producto = '";
-    $query .= $cod_prod."' AND tienda = ?";
+    $query = "UPDATE stock SET unidades = ? WHERE producto = '". $cod_prod."' AND tienda = ?";
     
     /* CON ETIQUETAS
     $query = "UPDATE stock SET unidades = :unidades WHERE producto = '";

@@ -7,12 +7,17 @@ comprobarSesion();
 
 $cesta = CestaCompra::carga_cesta();
 
-if (isset($_POST['unidades_modif'])) {
+if($_SERVER['REQUEST_METHOD'] == 'POST'){
+    $unidades = $_POST['unidades_modif'];
+    $cod_prod = $_POST['cod_modif'];
+}
+
+/*if (isset($_POST['unidades_modif'])) {
     $unidades = $_POST['unidades_modif'];
 }
 if (isset($_POST['cod_modif'])) {
     $cod_prod = $_POST['cod_modif'];
-}
+}*/
 
 $cesta->elimina_unidades($unidades, $cod_prod);
 

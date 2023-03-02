@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Cesta de la compra {% endblock %}
+
+{% block contenido %}
+
+    <table>
+        <tr>
+            <th>Producto</th>
+            <th>Precio</th>
+            <th>Cantidad</th>
+        </tr>
+        {% for productos in cesta %}
+            <tr>
+                <td>{{productos.producto.nombre}}</td>
+                <td>{{productos.producto.precio}}</td>
+                <td>{{productos.unidades}}</td>
+            </tr>
+        {% endfor %}
+    </table>
+
+{% endblock %}
+

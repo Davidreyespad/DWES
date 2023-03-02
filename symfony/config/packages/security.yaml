@@ -6,7 +6,7 @@ security:
     # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
     providers:
         # used to reload user from session & other features (e.g. switch_user)
-        app_user_provider:
+        dwesSymfony:
             entity:
                 class: App\Entity\Usuario
                 property: usuario
@@ -18,9 +18,9 @@ security:
             form_login:
                     login_path: app_login
                     check_path: app_login
-                    default_target_path: Familia
-                    #lazy: true
-            provider: app_user_provider
+                    default_target_path: familia
+            #lazy: true
+            provider: dwesSymfony
             #custom_authenticator: App\Security\LoginFormAuthenticator
             logout:
                 path: app_logout
